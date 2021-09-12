@@ -5,11 +5,9 @@ import {
 import Arrow from '../../assets/images/Icons/Arrow.svg';
 import EditIcon from '../../assets/images/Icons/EditIcon.svg';
 import TrashIcon from '../../assets/images/Icons/DeleteIcon.svg';
-import Modal from '../../Components/Modal';
 
 const Home = () => (
   <Container>
-    <Modal danger />
     <InputSearchContainer>
       <input type="text" placeholder="Pesquisar contato..." />
     </InputSearchContainer>
