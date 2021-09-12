@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Card, Container, Header, InputSearchContainer, ListContainer,
 } from './styles';
@@ -12,7 +13,7 @@ const Home = () => (
     </InputSearchContainer>
     <Header>
       <strong>3 contatos</strong>
-      <a href="/">Novo contato</a>
+      <Link to="/new">Novo contato</Link>
     </Header>
     <ListContainer>
       <header>
@@ -31,9 +32,9 @@ const Home = () => (
           <span>(41) 99999-9999</span>
         </div>
         <div className="actions">
-          <a href="/">
+          <Link to="/edit/vbdgfv">
             <img src={EditIcon} alt="Editar contato" />
-          </a>
+          </Link>
           <button type="button">
             <img src={TrashIcon} alt="Deletar contato" />
           </button>
