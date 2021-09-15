@@ -6,13 +6,14 @@ import Input from '../Input';
 import Select from '../Select';
 import { ButtonContainer, Form } from './style';
 import isValidEmail from '../../utils/isValidEmail';
+import useErrors from '../../hooks/useErrors';
 
 const ContactForm = ({ buttonLabel }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  const [errors, setErrors] = useState([]);
+  const { setError, removeError, getErrorMessageByFieldName } = useErrors();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -23,13 +24,10 @@ const ContactForm = ({ buttonLabel }) => {
     const nameEmpty = !nameValue;
     setName(nameValue);
     if (nameEmpty) {
-      setErrors((prevState) => [
-        ...prevState,
-        { field: 'name', message: 'Nome é obrigatório.' },
-      ]);
+      setError({ field: 'name', message: 'Nome é obrigatório.' });
       return;
     }
-    setErrors((prevState) => prevState.filter((error) => error.field !== 'name'));
+    removeError('name');
   };
 
   const changeEmailHandle = (evt) => {
@@ -37,24 +35,10 @@ const ContactForm = ({ buttonLabel }) => {
     setEmail(emailValue);
 
     if (emailValue && !isValidEmail(emailValue)) {
-      const errorAlreadyExists = errors.find((error) => error.field === 'email');
-
-      if (errorAlreadyExists) {
-        return;
-      }
-
-      setErrors((prevState) => [
-        ...prevState,
-        { field: 'email', message: 'E-mail inválido.' },
-      ]);
+      setError({ field: 'email', message: 'E-mail inválido.' });
       return;
     }
-    setErrors((prevState) => prevState.filter((error) => error.field !== 'email'));
-  };
-
-  const getErrorMessageByFieldName = (fieldName) => {
-    const errorMessage = errors.find((error) => error.field === fieldName)?.message;
-    return errorMessage;
+    removeError('email');
   };
 
   return (
