@@ -6,6 +6,7 @@ import Input from '../Input';
 import Select from '../Select';
 import { ButtonContainer, Form } from './style';
 import isValidEmail from '../../utils/isValidEmail';
+import formatPhone from '../../utils/formatPhone';
 import useErrors from '../../hooks/useErrors';
 
 const ContactForm = ({ buttonLabel }) => {
@@ -41,6 +42,11 @@ const ContactForm = ({ buttonLabel }) => {
     removeError('email');
   };
 
+  const changePhoneHandle = (evt) => {
+    const phoneValueFormat = formatPhone(evt.target.value);
+    setPhone(phoneValueFormat);
+  };
+
   return (
     <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={getErrorMessageByFieldName('name')}>
@@ -68,7 +74,7 @@ const ContactForm = ({ buttonLabel }) => {
           value={phone}
           placeholder="Telefone"
           type="tel"
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={changePhoneHandle}
         />
       </FormGroup>
       <FormGroup>
