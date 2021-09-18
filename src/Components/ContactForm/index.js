@@ -42,7 +42,7 @@ const ContactForm = ({ buttonLabel }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
           name="name"
@@ -58,14 +58,16 @@ const ContactForm = ({ buttonLabel }) => {
           value={email}
           error={getErrorMessageByFieldName('email')}
           placeholder="E-mail"
+          type="email"
           onChange={changeEmailHandle}
         />
       </FormGroup>
       <FormGroup>
         <Input
           name="phone"
-          placeholder="Telefone"
           value={phone}
+          placeholder="Telefone"
+          type="tel"
           onChange={(e) => setPhone(e.target.value)}
         />
       </FormGroup>
