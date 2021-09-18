@@ -14,11 +14,15 @@ const ContactForm = ({ buttonLabel }) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  const { setError, removeError, getErrorMessageByFieldName } = useErrors();
+  const {
+    errors, setError, removeError, getErrorMessageByFieldName,
+  } = useErrors();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
   };
+
+  const isFormValid = (name && errors.length === 0);
 
   const changeNameHandle = (evt) => {
     const nameValue = evt.target.value;
@@ -54,7 +58,7 @@ const ContactForm = ({ buttonLabel }) => {
           name="name"
           value={name}
           error={getErrorMessageByFieldName('name')}
-          placeholder="Nome"
+          placeholder="Nome *"
           onChange={changeNameHandle}
         />
       </FormGroup>
@@ -89,7 +93,7 @@ const ContactForm = ({ buttonLabel }) => {
         </Select>
       </FormGroup>
       <ButtonContainer>
-        <Button type="submit">{buttonLabel}</Button>
+        <Button disabled={!isFormValid} type="submit">{buttonLabel}</Button>
       </ButtonContainer>
     </Form>
   );
