@@ -24,9 +24,10 @@ export const InputSearchContainer = styled.div`
 `;
 
 export const Header = styled.header`
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.gray[100]};
+  display: flex;
+  justify-content: ${({ justifyContent }) => justifyContent};
   margin-top: 32px;
 
   strong {
@@ -34,12 +35,13 @@ export const Header = styled.header`
   }
 
   a {
+    border: 2px solid ${({ theme }) => theme.colors.primary.main};
+    border-radius: 4px;
     color: ${({ theme }) => theme.colors.primary.main};
     font-weight: bold;
-    text-decoration: none;
-    border: 2px solid ${({ theme }) => theme.colors.primary.main};
+    margin-bottom: 16px;
     padding: 8px 16px;
-    border-radius: 4px;
+    text-decoration: none;
     transition: all .2s ease-in;
 
     &:hover {
@@ -55,10 +57,10 @@ export const ListHeader = styled.header`
     margin-bottom: 8px;
 
     button {
+      align-items: center;
       background: transparent;
       border: none;
       display: flex;
-      align-items: center;
 
       span {
         margin-right: 8px;
@@ -120,5 +122,51 @@ export const Card = styled.div`
       margin-left: 8px;
 
     }
+  }
+`;
+
+export const ErrorContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+
+  .details {
+    margin-left:24px;
+  }
+
+  strong {
+    color: ${({ theme }) => theme.colors.danger.main};
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: block;
+  }
+`;
+
+export const EmptyListContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+
+  p {
+    color: ${({ theme }) => theme.colors.gray[200]};
+    text-align: center;
+    margin-top: 8px;
+
+    strong {
+      color: ${({ theme }) => theme.colors.primary.main};
+    }
+  }
+`;
+
+export const SearchNotFoundContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-start;
+
+  span {
+    color: ${({ theme }) => theme.colors.gray[200]};
+    margin-left: 24px;
+    word-break: break-word;
   }
 `;
