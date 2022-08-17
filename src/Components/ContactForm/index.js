@@ -4,28 +4,37 @@ import FormGroup from '../FormGroup';
 import Button from '../Button';
 import Input from '../Input';
 import Select from '../Select';
-import { ButtonContainer, Form } from './style';
+import useErrors from '../../hooks/useErrors';
 import isValidEmail from '../../utils/isValidEmail';
 import formatPhone from '../../utils/formatPhone';
-import useErrors from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
+import { ButtonContainer, Form } from './style';
 
-const ContactForm = ({ buttonLabel }) => {
+const ContactForm = ({ buttonLabel, onSubmit }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const {
     errors, setError, removeError, getErrorMessageByFieldName,
   } = useErrors();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setIsSubmiting(true);
+    await onSubmit({
+      name,
+      email,
+      phone,
+      categoryId,
+    });
+    setIsSubmiting(false);
   };
 
-  const isFormValid = (name && errors.length === 0);
+  const isFormValid = name && errors.length === 0;
 
   const changeNameHandle = (evt) => {
     const nameValue = evt.target.value;
@@ -59,7 +68,8 @@ const ContactForm = ({ buttonLabel }) => {
       try {
         const categoriesList = await CategoriesService.listCategories();
         setCategories(categoriesList);
-      } catch { } finally {
+      } catch {
+      } finally {
         setIsLoadingCategories(false);
       }
     };
@@ -72,6 +82,7 @@ const ContactForm = ({ buttonLabel }) => {
         <Input
           name="name"
           value={name}
+          disabled={isSubmiting}
           error={getErrorMessageByFieldName('name')}
           placeholder="Nome *"
           onChange={changeNameHandle}
@@ -81,6 +92,7 @@ const ContactForm = ({ buttonLabel }) => {
         <Input
           name="email"
           value={email}
+          disabled={isSubmiting}
           error={getErrorMessageByFieldName('email')}
           placeholder="E-mail"
           type="email"
@@ -91,6 +103,7 @@ const ContactForm = ({ buttonLabel }) => {
         <Input
           name="phone"
           value={phone}
+          disabled={isSubmiting}
           placeholder="Telefone"
           type="tel"
           onChange={changePhoneHandle}
@@ -101,16 +114,20 @@ const ContactForm = ({ buttonLabel }) => {
           name="categoryId"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-          disabled={isLoadingCategories}
+          disabled={isLoadingCategories || isSubmiting}
         >
           <option value="">Escolha uma categoria</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id}>{category.name}</option>
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
           ))}
         </Select>
       </FormGroup>
       <ButtonContainer>
-        <Button disabled={!isFormValid} type="submit">{buttonLabel}</Button>
+        <Button disabled={!isFormValid} type="submit" isLoading={isSubmiting}>
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </Form>
   );
@@ -118,6 +135,7 @@ const ContactForm = ({ buttonLabel }) => {
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
