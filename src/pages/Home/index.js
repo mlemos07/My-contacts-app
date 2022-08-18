@@ -4,9 +4,9 @@ import {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { Link } from 'react-router-dom';
-import Arrow from '../../assets/images/Icons/Arrow.svg';
-import TrashIcon from '../../assets/images/Icons/DeleteIcon.svg';
-import EditIcon from '../../assets/images/Icons/EditIcon.svg';
+import Arrow from '../../assets/images/icons/Arrow.svg';
+import TrashIcon from '../../assets/images/icons/DeleteIcon.svg';
+import EditIcon from '../../assets/images/icons/EditIcon.svg';
 import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';

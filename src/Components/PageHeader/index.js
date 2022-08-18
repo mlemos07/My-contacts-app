@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { Container } from './styles';
-import Arrow from '../../assets/images/Icons/Arrow.svg';
+import Arrow from '../../assets/images/icons/Arrow.svg';
 
 const PageHeader = ({ title }) => (
   <Container>
