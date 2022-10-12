@@ -14,6 +14,7 @@ const containerVariants = {
 
 export const Container = styled.div`
   padding: 16px 32px;
+  cursor: pointer;
   background: ${({ theme }) => theme.colors.primary.main};
   color: #fff;
   border-radius: 4px;
