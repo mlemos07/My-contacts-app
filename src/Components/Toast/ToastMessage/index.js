@@ -6,7 +6,7 @@ import checkCircleIcon from '../../../assets/images/icons/check-circle.svg';
 const ToastMessage = ({ message, onRemoveMessage }) => {
   const handleRemoveToast = () => onRemoveMessage(message.id);
   return (
-    <Container type={message.type} onClick={handleRemoveToast}>
+    <Container type={message.type} onClick={handleRemoveToast} tabIndex={0} role="button">
       {message.type === 'danger' && <img src={xCircleIcon} alt="x" />}
       {message.type === 'success' && <img src={checkCircleIcon} alt="x" />}
       <strong>{message.text}</strong>
