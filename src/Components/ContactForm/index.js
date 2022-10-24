@@ -32,6 +32,10 @@ const ContactForm = ({ buttonLabel, onSubmit }) => {
       categoryId,
     });
     setIsSubmiting(false);
+    setName('');
+    setEmail('');
+    setPhone('');
+    setCategoryId('');
   };
 
   const isFormValid = name && errors.length === 0;
