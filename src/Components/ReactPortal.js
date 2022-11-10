@@ -11,7 +11,7 @@ const ReactPortal = ({ containerId, children }) => {
   return ReactDOM.createPortal(children, container);
 };
 
-ReactPortal.PropTypes = {
+ReactPortal.propTypes = {
   containerId: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
