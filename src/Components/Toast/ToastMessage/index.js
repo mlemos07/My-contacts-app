@@ -11,7 +11,7 @@ const ToastMessage = ({ message, onRemoveMessage }) => {
       handleRemoveToast();
     }, message.duration || 7000);
     return () => clearTimeout(timeoutId);
-  }, [handleRemoveToast]);
+  }, []);
   return (
     <Container
       type={message.type}
