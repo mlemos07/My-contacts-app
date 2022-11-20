@@ -1,10 +1,11 @@
 import { useHistory, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import PageHeader from '../../Components/PageHeader';
 import ContactForm from '../../Components/ContactForm';
-import ContactsService from '../../services/ContactsService';
 import Loader from '../../Components/Loader';
+import PageHeader from '../../Components/PageHeader';
+import ContactsService from '../../services/ContactsService';
 import toast from '../../utils/toast';
+import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 
 const EditContact = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,23 +13,28 @@ const EditContact = () => {
   const contactFormRef = useRef(null);
   const { id } = useParams();
   const history = useHistory();
+  const safeAsyncAction = useSafeAsyncAction();
   useEffect(() => {
     const loadContact = async () => {
       try {
         const contactData = await ContactsService.getContactById(id);
-        contactFormRef.current.setFieldValues(contactData);
-        setContactName(contactData.name);
-        setIsLoading(false);
+        safeAsyncAction(() => {
+          contactFormRef.current.setFieldValues(contactData);
+          setContactName(contactData.name);
+          setIsLoading(false);
+        });
       } catch {
-        history.push('/');
-        toast({
-          type: 'danger',
-          text: 'Contato não encontrado.',
+        safeAsyncAction(() => {
+          history.push('/');
+          toast({
+            type: 'danger',
+            text: 'Contato não encontrado.',
+          });
         });
       }
     };
     loadContact();
-  }, [id, history]);
+  }, [id, history, safeAsyncAction]);
   const handleSubmit = async ({
     name, email, phone, categoryId,
   }) => {
@@ -52,7 +58,9 @@ const EditContact = () => {
   return (
     <>
       <Loader isLoading={isLoading} />
-      <PageHeader title={isLoading ? 'Carregando...' : `Editar ${contactName}`} />
+      <PageHeader
+        title={isLoading ? 'Carregando...' : `Editar ${contactName}`}
+      />
       <ContactForm
         ref={contactFormRef}
         buttonLabel="Salvar alterações"
