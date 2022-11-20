@@ -7,6 +7,7 @@ import Button from '../Button';
 import Input from '../Input';
 import Select from '../Select';
 import useErrors from '../../hooks/useErrors';
+import useSafeAsyncState from '../../hooks/useSafeAsyncState';
 import isValidEmail from '../../utils/isValidEmail';
 import formatPhone from '../../utils/formatPhone';
 import CategoriesService from '../../services/CategoriesService';
@@ -17,8 +18,8 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [categories, setCategories] = useSafeAsyncState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState(true);
   const [isSubmiting, setIsSubmiting] = useState(false);
   const {
     errors, setError, removeError, getErrorMessageByFieldName,
@@ -90,7 +91,7 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
       }
     };
     loadCategories();
-  }, []);
+  }, [setCategories, setIsLoadingCategories]);
 
   return (
     <Form onSubmit={handleSubmit} noValidate>
