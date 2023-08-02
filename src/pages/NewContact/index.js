@@ -6,16 +6,8 @@ import toast from '../../utils/toast';
 
 const NewContact = () => {
   const contactFormRef = useRef(null);
-  const handleSubmit = async ({
-    name, email, phone, categoryId,
-  }) => {
+  const handleSubmit = async (contact) => {
     try {
-      const contact = {
-        name,
-        email,
-        phone,
-        category_id: categoryId,
-      };
       await ContactsService.createContact(contact);
       contactFormRef.current.resetField();
       toast({ type: 'success', text: 'Contato criado com sucesso.' });

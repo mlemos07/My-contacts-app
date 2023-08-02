@@ -35,18 +35,10 @@ const EditContact = () => {
     };
     loadContact();
   }, [id, history, safeAsyncAction]);
-  const handleSubmit = async ({
-    name, email, phone, categoryId,
-  }) => {
+  const handleSubmit = async (contact) => {
     try {
-      const contact = {
-        name,
-        email,
-        phone,
-        category_id: categoryId,
-      };
       await ContactsService.updateContact(id, contact);
-      setContactName(name);
+      setContactName(contact.name);
       toast({ type: 'success', text: 'Contato editado com sucesso.' });
     } catch {
       toast({
